@@ -1,0 +1,20 @@
+{
+  "name": "nanomule",
+  "version": "1.0.0",
+  "description": "minimal dev server",
+  "author": {
+    "name": "Michael Miretski",
+    "email": "4apaev@gmail.com"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "scripts": {
+    "test": "mocha tests/index.js"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "chai": "latest",
+    "chai-http": "latest"
+  }
+}
