@@ -10,11 +10,12 @@
     "type": "git"
   },
   "scripts": {
-    "test": "mocha tests/index.js"
+    "test": "mocha -c --check-leaks test/index.js"
   },
   "devDependencies": {
     "mocha": "latest",
     "chai": "latest",
-    "chai-http": "latest"
+    "chai-http": "latest",
+    "mongodb": "latest"
   }
 }
