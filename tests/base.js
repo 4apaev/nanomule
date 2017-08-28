@@ -1,48 +1,34 @@
-const { chai, should, Srv, Body } = require('./bootstrap')
-
 describe('App:base', () => {
-  const App = new Srv
-
-  // App.use(async (ctx, next) => {
-  //   await next()
-  //   log(ctx.method, ctx.code, ctx.url)
-  // })
-
-  App.get('/', ctx => {
-    ctx.code = 200
-    ctx.type = 'html'
-    ctx.body = '<h1>Hallo</h1>'
-  })
-
-  App.get('/query', ctx => {
-    ctx.code = 200
-    ctx.type = 'json'
-    ctx.body = ctx.query
-  })
-
-
-  App.get('/json', ctx => {
-    ctx.code = 200
-    ctx.type = 'json'
-    ctx.body = { hallo: true }
-  })
-
-  App.post(Body)
-
-  App.post('/json', ctx => {
-    ctx.code = 200
-    ctx.type = 'json'
-    const { payload } = ctx
-    payload.olo = true
-    ctx.body = payload
-  })
-
-  App.get('/fail', ctx => {
-    throw new Error('Epic Fail')
-  })
+  const App = new Mule;
+  App
+    .get('/', ctx => {
+      ctx.code = 200
+      ctx.type = 'html'
+      ctx.body = '<h1>Hallo</h1>'
+    })
+    .get('/query', ctx => {
+      ctx.code = 200
+      ctx.type = 'json'
+      ctx.body = ctx.query
+    })
+    .get('/json', ctx => {
+      ctx.code = 200
+      ctx.type = 'json'
+      ctx.body = { hallo: true }
+    })
+    .post(require('../lib/body'))
+    .post('/json', ctx => {
+      ctx.code = 200
+      ctx.type = 'json'
+      const { payload } = ctx
+      payload.olo = true
+      ctx.body = payload
+    })
+    .get('/fail', ctx => {
+      throw new Error('Epic Fail')
+    });
 
   const app = App.init()
-
 
   it('should get html', done => {
     chai
@@ -56,7 +42,7 @@ describe('App:base', () => {
   })
 
   it('should parse url query params', done => {
-    let q = { a:'1',b:'2' };
+    let q = { a: '1', b: '2' };
     chai
       .request(app)
       .get('/query')
@@ -85,11 +71,11 @@ describe('App:base', () => {
     chai
       .request(app)
       .post('/json')
-      .send({ a:1,b:2 })
+      .send({ a: 1, b: 2 })
       .end((err, res) => {
         res.should.be.json;
         res.should.have.status(200);
-        res.body.should.be.eql({ a:1,b:2,olo: true });
+        res.body.should.be.eql({ a: 1, b: 2, olo: true });
         done();
       })
   })
@@ -109,7 +95,6 @@ describe('App:base', () => {
   })
 
   it('should fail', done => {
-
     chai
       .request(app)
       .get('/fail')
@@ -121,5 +106,4 @@ describe('App:base', () => {
         done();
       })
   })
-
 })

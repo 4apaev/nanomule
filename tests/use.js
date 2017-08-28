@@ -1,41 +1,29 @@
-const { chai, should, Srv } = require('./bootstrap')
-
-
-
 describe('App:use', () => {
 
-  it('should compose middleware', done => {
-    const App = new Srv
+  it('should compose middleware', async () => {
     const calls = [];
+    const App = new Mule
 
-    App.use((ctx, next) => {
-      calls.push(1);
-      return next().then(() => {
-        calls.push(6);
-      });
-    });
-
-    App.use((ctx, next) => {
-      calls.push(2);
-      return next().then(() => {
-        calls.push(5);
-      });
-    });
-
-    App.use((ctx, next) => {
-      calls.push(3);
-      return next().then(() => {
-        calls.push(4);
-      });
-    });
-
-    const app = App.init()
-
-    chai.request(app).get('/').end((err, res) => {
-        res.should.have.status(404);
-        calls.should.be.eql([1, 2, 3, 4, 5, 6]);
-        done();
+    App.use(async (ctx, next) => {
+        calls.push(1)
+        await next()
+        calls.push(6)
       })
-  });
+      .use(async (ctx, next) => {
+        calls.push(2)
+        await next()
+        calls.push(5)
+      })
+      .use(async (ctx, next) => {
+        ctx.code = 200
+        calls.push(3)
+        await next()
+        calls.push(4)
+      })
+
+    const res = await chai.request(App.init()).get('/')
+    res.should.have.status(200);
+    calls.should.be.eql([ 1, 2, 3, 4, 5, 6 ]);
+  })
 
 })
