@@ -8,3 +8,4 @@ chai.use(require('chai-http'));
 require('./use');
 require('./base');
 require('./db');
+require('./geo');
