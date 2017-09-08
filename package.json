@@ -2,6 +2,7 @@
   "name": "nanomule",
   "version": "1.0.0",
   "description": "minimal dev server",
+  "main": "index.js",
   "author": {
     "name": "Michael Miretski",
     "email": "4apaev@gmail.com"
