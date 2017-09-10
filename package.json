@@ -13,6 +13,9 @@
   "scripts": {
     "test": "mocha -c --check-leaks test/index.js"
   },
+  "dependencies": {
+    "mongodb": "latest"
+  },
   "devDependencies": {
     "mocha": "latest",
     "chai": "latest",
