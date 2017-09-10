@@ -1,5 +1,8 @@
 global.log = console.log;
+
 global.Mule = require('../lib/app')
+global.ReqBody = require('../lib/body')
+
 global.chai = require('chai');
 global.should = chai.should();
 
