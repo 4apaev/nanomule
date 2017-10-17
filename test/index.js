@@ -11,5 +11,3 @@ chai.use(require('chai-http'));
 require('./use');
 require('./base');
 require('./params');
-require('./db');
-require('./geo');
