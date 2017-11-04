@@ -27,7 +27,8 @@ describe('App:base', () => {
   })
 
   App.get('/fail', ctx => {
-    throw new Error('Epic Fail')
+    ctx.throws(500, 'BDBDA')
+    // throw new Error('Epic Fail')
   });
 
   App.get('/json_res', ctx => {
@@ -87,7 +88,7 @@ describe('App:base', () => {
       res.should.be.json;
       res.should.have.status(500);
       res.body.ok.should.be.eql(false);
-      res.body.message.should.be.eql('Epic Fail');
+      res.body.message.should.be.eql('BDBDA');
       done();
     })
   })
