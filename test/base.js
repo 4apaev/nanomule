@@ -27,13 +27,9 @@ describe('App:base', () => {
   })
 
   App.get('/fail', ctx => {
+    ctx.code = 200
     throw new Error('Epic Fail')
   });
-
-  App.get('/json_res', ctx => {
-    ctx.json({ a:1,b:2,c:3 })
-  })
-
 
   const app = chai.request(App.init())
 
@@ -88,16 +84,6 @@ describe('App:base', () => {
       res.should.have.status(500);
       res.body.ok.should.be.eql(false);
       res.body.message.should.be.eql('Epic Fail');
-      done();
-    })
-  })
-
-
-  it('should return json', done => {
-    app.get('/json_res').end((err, res) => {
-      res.should.be.json;
-      res.should.have.status(200);
-      res.body.should.be.eql({ a:1,b:2,c:3 });
       done();
     })
   })
