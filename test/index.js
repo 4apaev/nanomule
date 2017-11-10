@@ -14,5 +14,6 @@ require('./params');
 require('./types');
 require('./errors');
 require('./static');
+require('./db');
 
 

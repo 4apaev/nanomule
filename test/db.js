@@ -10,13 +10,14 @@ describe('App:model', () => {
 
     await DB.connect('test');
     await DB.define('one', { a: { $exists: true }});
-    await DB.one.fill([ { a: 1 }, { a: 2 }, { a: 3 } ]);
+    await DB.one.$.insertMany([ { a: 1 }, { a: 2 }, { a: 3 } ]);
 
     App.post(ReqBody)
     App.get('/one',     DB.one.route('list', ctx => ctx.query))
     App.post('/one',    DB.one.route('create', ctx => ctx.payload))
     App.del('/one/:id', DB.one.route('remove', ctx => ctx.params.id));
     App.get('/one/:id', DB.one.route('find', ctx => ctx.params.id))
+
 
     app = chai.request(App.init())
 
